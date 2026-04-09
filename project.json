@@ -1,0 +1,22 @@
+{
+  "overview": "West-Site Rental is a complete rental management app for West-Site Boardshop. Employees can manage inventory, generate QR codes, and track active rentals. Customers can browse available gear, fill in a detailed reservation form, view full pricing tables, and calculate rental costs — all in Dutch.",
+  "features": [
+    "Full reservation form with personal details, gear selection, duration tiers, and measurements",
+    "Complete pricing tables for all rental categories (snowboards, boots, bindings, splitboards, skate, surf)",
+    "Rental duration calculator with tier-based pricing (Dag/Weekend/Shortski/Week/2 weken)",
+    "Employee dashboard for inventory management with QR code generation",
+    "Role-based access with separate flows for employees and customers",
+    "Real-time availability checking by date range"
+  ],
+  "category": "productivity",
+  "tags": [
+    "rental",
+    "inventory",
+    "snowboard",
+    "dutch",
+    "boardshop",
+    "qr-code",
+    "pricing"
+  ],
+  "last_updated": "2026-04-08T11:25:37.761Z"
+}

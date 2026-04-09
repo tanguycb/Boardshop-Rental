@@ -1,0 +1,117 @@
+// Version: 3.0.0
+type Counter__913421304 = {var value : Nat};
+type List__415060402<T> = List__790383201<T>;
+type List__790383201<T> =
+  {
+    var blockIndex : Nat__490723111;
+    var blocks : [var [var ?T]];
+    var elementIndex : Nat__490723111
+  };
+type Nat__490723111 = Nat__920180692;
+type Nat__920180692 = Nat;
+type OldReserveringStatus__494184638 =
+  {#Bevestigd; #Geannuleerd; #InAfwachting};
+type OldReservering__787224031 =
+  {
+    eindDatum : Int;
+    id : Nat;
+    klantContact : Text;
+    klantNaam : Text;
+    klantPrincipal : Principal;
+    productIds : [Nat];
+    startDatum : Int;
+    status : OldReserveringStatus__494184638
+  };
+type OldUserProfile__416069324 =
+  {
+    contactInfo : Text;
+    naam : Text;
+    principal : Principal;
+    role : OldUserRole__889293160
+  };
+type OldUserRole__889293160 = {#Klant; #Medewerker};
+type ProductId__160010635 = Nat;
+type ProductType__94855368 = {#Bindingen; #Boots; #Snowboard};
+type Product__161553557 =
+  {
+    beschikbaar : Bool;
+    id : ProductId__160010635;
+    maat : Text;
+    naam : Text;
+    prijsPerDag : Nat;
+    productType : ProductType__94855368;
+    qrCode : Text
+  };
+type RentalId__871642415 = Nat;
+type ReservationId__879094814 = Nat;
+type ReserveringStatus__101247906 = {#Bevestigd; #Geannuleerd; #InAfwachting};
+type Reservering__171344104 =
+  {
+    aangemaakt : Timestamp__301639476;
+    contactEmail : Text;
+    contactNaam : Text;
+    contactTelefoon : Text;
+    eindDatum : Timestamp__301639476;
+    id : ReservationId__879094814;
+    productIds : [ProductId__160010635];
+    startDatum : Timestamp__301639476;
+    status : ReserveringStatus__101247906
+  };
+type Timestamp__301639476 = Int;
+type UserProfile__129828592 =
+  {
+    contactInfo : Text;
+    naam : Text;
+    principal : Principal;
+    role : UserRole__451090586
+  };
+type UserRole__451090586 = {#Admin; #Medewerker};
+type VerhuurStatus__151662789 = {#Actief; #Ingeleverd; #TeLaat};
+type Verhuur__993121378 =
+  {
+    eindDatum : Timestamp__301639476;
+    id : RentalId__871642415;
+    isSet : Bool;
+    klantContact : Text;
+    klantNaam : Text;
+    productIds : [ProductId__160010635];
+    startDatum : Timestamp__301639476;
+    status : VerhuurStatus__151662789
+  };
+actor ({
+  in gebruikers : List__415060402<OldUserProfile__416069324>;
+  in producten : List__415060402<Product__161553557>;
+  in reserveringen : List__415060402<OldReservering__787224031>;
+  in verhuringen : List__415060402<Verhuur__993121378>;
+  in volgendeProductId : Counter__913421304;
+  in volgendeReserveringId : Counter__913421304;
+  in volgendeVerhuurId : Counter__913421304
+}, {
+  stable gebruikers :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?UserProfile__129828592]];
+      var elementIndex : Nat__490723111
+    };
+  stable producten :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?Product__161553557]];
+      var elementIndex : Nat__490723111
+    };
+  stable reserveringen :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?Reservering__171344104]];
+      var elementIndex : Nat__490723111
+    };
+  stable verhuringen :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?Verhuur__993121378]];
+      var elementIndex : Nat__490723111
+    };
+  stable volgendeProductId : {var value : Nat};
+  stable volgendeReserveringId : {var value : Nat};
+  stable volgendeVerhuurId : {var value : Nat}
+}) ;

@@ -1,0 +1,116 @@
+type VerhuurStatus = 
+ variant {
+   Actief;
+   Ingeleverd;
+   TeLaat;
+ };
+type Verhuur = 
+ record {
+   eindDatum: Timestamp;
+   id: RentalId;
+   isSet: bool;
+   klantContact: text;
+   klantNaam: text;
+   productIds: vec ProductId;
+   startDatum: Timestamp;
+   status: VerhuurStatus;
+ };
+type UserRole = 
+ variant {
+   Admin;
+   Medewerker;
+ };
+type UserProfile = 
+ record {
+   contactInfo: text;
+   naam: text;
+   "principal": principal;
+   role: UserRole;
+ };
+type Timestamp = int;
+type ReserveringStatus = 
+ variant {
+   Bevestigd;
+   Geannuleerd;
+   InAfwachting;
+ };
+type Reservering = 
+ record {
+   aangemaakt: Timestamp;
+   contactEmail: text;
+   contactNaam: text;
+   contactTelefoon: text;
+   eindDatum: Timestamp;
+   id: ReservationId;
+   productIds: vec ProductId;
+   startDatum: Timestamp;
+   status: ReserveringStatus;
+ };
+type ReservationId = nat;
+type RentalId = nat;
+type ProductType = 
+ variant {
+   Bindingen;
+   Boots;
+   Snowboard;
+ };
+type ProductId = nat;
+type ProductFilter = 
+ record {
+   beschikbaar: opt bool;
+   maat: opt text;
+   productType: opt ProductType;
+ };
+type Product = 
+ record {
+   beschikbaar: bool;
+   id: ProductId;
+   maat: text;
+   naam: text;
+   prijsPerDag: nat;
+   productType: ProductType;
+   qrCode: text;
+ };
+type NieuweVerhuur = 
+ record {
+   eindDatum: Timestamp;
+   isSet: bool;
+   klantContact: text;
+   klantNaam: text;
+   productIds: vec ProductId;
+   startDatum: Timestamp;
+ };
+type NieuweReservering = 
+ record {
+   contactEmail: text;
+   contactNaam: text;
+   contactTelefoon: text;
+   eindDatum: Timestamp;
+   productIds: vec ProductId;
+   startDatum: Timestamp;
+ };
+service : {
+  annuleerReservering: (id: ReservationId) -> (bool);
+  bevestigReservering: (id: ReservationId) -> (bool);
+  bewerkProduct: (id: ProductId, naam: text, maat: text, prijsPerDag: 
+   nat, beschikbaar: bool) -> (bool);
+  getActieveVerhuringen: () -> (vec Verhuur) query;
+  getAlleProductenVoorQrBatch: () -> (vec Product) query;
+  getAlleReserveringen: () -> (vec Reservering) query;
+  getBeschikbareProducten: (startDatum: Timestamp, eindDatum: Timestamp) ->
+   (vec Product) query;
+  getMijnProfiel: () -> (opt UserProfile) query;
+  getMijnRol: () -> (opt UserRole) query;
+  getProduct: (id: ProductId) -> (opt Product) query;
+  getProducten: (filter: ProductFilter) -> (vec Product) query;
+  getVerhuur: (id: RentalId) -> (opt Verhuur) query;
+  getVervallenVerhuringen: () -> (vec Verhuur) query;
+  markeerIngeleverd: (id: RentalId) -> (bool);
+  plaatsReserveringPubliek: (invoer: NieuweReservering) -> (ReservationId);
+  registreerMedewerker: (naam: text, contactInfo: text) -> (bool);
+  startVerhuur: (invoer: NieuweVerhuur) -> (RentalId);
+  verwijderProduct: (id: ProductId) -> (bool);
+  voegProductToe: (naam: text, productType: ProductType, maat: text,
+   prijsPerDag: nat) -> (ProductId);
+  zoekProductOpQrCode: (qrCode: text) -> (opt Product) query;
+}
